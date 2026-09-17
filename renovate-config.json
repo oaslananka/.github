@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Conservative shared dependency-maintenance baseline for oaslananka repositories.",
+  "extends": [
+    "config:best-practices",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "timezone": "Europe/Istanbul",
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "pinDigests": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"],
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "description": "Enforce the seven-day quarantine for npm even though config:best-practices includes a shorter npm minimum age.",
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "Require an explicit Dependency Dashboard decision for all major upgrades.",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "automerge": false,
+      "prPriority": -5
+    }
+  ]
+}
